@@ -1,6 +1,7 @@
 package com.example.football.services;
 import com.example.football.models.Country;
 import com.example.football.repository.CountryRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,24 +16,47 @@ public class CountryService {
         this.countryRepository = countryRepository;
     }
 
-    public List<Country> getAllCountries() {
+    public List<Country> getCountries() {
         return countryRepository.findAll();
     }
 
     public Country getCountryById(UUID id) {
-        return countryRepository.getById(id);
+        return countryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Country not found with id: " + id));
     }
 
-    public Country createCountry(Country country) {
-        Optional<Country> possibleCountry =  countryRepository.findCountryByName(country.getName());
+    public Country createCountry(String name, Integer worldCups) {
+        Optional<Country> possibleCountry =  countryRepository.findCountryByName(name);
         possibleCountry.ifPresent(foundCountry -> {
             throw new IllegalStateException("Such country already exists");
         });
 
-        return countryRepository.save(country);
+        Country newCountry = new Country();
+        newCountry.setName(name);
+        newCountry.setWorldCups(worldCups);
+
+        return countryRepository.save(newCountry);
     }
 
-    public Country updateCountry(String name, Integer worldCups) {
+    public Country updateCountry(UUID countryId, String name, Integer worldCups) {
+        Optional<Country> possibleCountry = countryRepository.findById(countryId);
 
+        if (possibleCountry.isPresent()) {
+            Country foundCountry = possibleCountry.get();
+
+            foundCountry.setName(name);
+            foundCountry.setWorldCups(worldCups);
+
+            return countryRepository.save(foundCountry);
+        } else {
+            throw new EntityNotFoundException("Country not found with id: " + countryId);
+        }
+    }
+
+    public void deleteCountry(UUID countryId) {
+        if (!countryRepository.existsById(countryId)) {
+            throw new EntityNotFoundException("Country with id " + countryId + " not found");
+        }
+        countryRepository.deleteById(countryId);
     }
 }
