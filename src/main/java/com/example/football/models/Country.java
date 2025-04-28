@@ -1,5 +1,6 @@
 package com.example.football.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,6 +26,7 @@ public class Country {
     private Integer worldCups;
 
     @OneToMany(mappedBy = "country")
+    @JsonManagedReference
     private List<League> leagues;
 
 //    @ManyToMany(mappedBy = "countries")

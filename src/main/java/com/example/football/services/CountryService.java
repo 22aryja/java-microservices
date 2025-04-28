@@ -17,11 +17,11 @@ public class CountryService {
     }
 
     public List<Country> getCountries() {
-        return countryRepository.findAll();
+        return countryRepository.findAllCountriesWithLeagues();
     }
 
     public Country getCountryById(UUID id) {
-        return countryRepository.findById(id)
+        return countryRepository.findCountryWithLeaguesById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Country not found with id: " + id));
     }
 

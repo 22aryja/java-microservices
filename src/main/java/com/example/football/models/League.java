@@ -1,4 +1,5 @@
 package com.example.football.models;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,13 +21,11 @@ public class League {
     private String name;
 
     @Column(nullable = false)
-    private Integer amount_of_teams;
-
-    @Column(nullable = false)
-    private String type;
+    private Integer amountOfTeams;
 
     @ManyToOne
     @JoinColumn(name = "country_id", nullable = false)
+    @JsonBackReference
     private Country country;
 
 //    @OneToMany
