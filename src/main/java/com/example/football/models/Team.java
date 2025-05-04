@@ -1,9 +1,9 @@
 package com.example.football.models;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.UUID;
-
 
 @Getter
 @Setter
@@ -21,7 +21,15 @@ public class Team {
     private String name;
 
     @Column(nullable = false)
-    private Integer amount_of_players;
+    private Integer amountOfPlayers;
+
+    @ManyToOne
+    @JoinColumn(name = "league_id", nullable = false)
+    @JsonBackReference
+    private League league;
+
+//    @OneToMany
+//    private List<Player> players;
 
 //    @OneToOne
 //    private Coach coach;
@@ -29,7 +37,4 @@ public class Team {
 //    @OneToOne
 //    private Stadium stadium;
 //
-//    @OneToMany
-//    private List<Player> players;
-
 }

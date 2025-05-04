@@ -6,6 +6,7 @@ import com.example.football.repository.CountryRepository;
 import com.example.football.repository.LeagueRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,13 +24,16 @@ public class LeagueService {
     }
 
     public List<League> getLeagues() {
-        return leagueRepository.findAll();
+        return leagueRepository.findAllLeagueWithTeams();
     }
 
     public League getLeagueById(UUID leagueId){
-        return leagueRepository.findById(leagueId).orElseThrow(() -> new EntityNotFoundException("Country not found with id: " + leagueId));
+        return leagueRepository.findLeagueWithTeamsById(leagueId).orElseThrow(
+                () -> new EntityNotFoundException("Country not found with id: " + leagueId)
+        );
     }
 
+    @Transactional
     public League createLeague(String name, Integer amountOfTeams, UUID countryId){
         Optional<League> possibleLeague = leagueRepository.findLeagueByName(name);
         possibleLeague.ifPresent(league -> {throw new IllegalStateException("Such league already exists");});
@@ -44,6 +48,7 @@ public class LeagueService {
         return leagueRepository.save(newLeague);
     }
 
+    @Transactional
     public League updateLeague(UUID leagueId, String name, Integer amountOfTeams) {
         Optional<League> possibleLeague = leagueRepository.findById(leagueId);
 

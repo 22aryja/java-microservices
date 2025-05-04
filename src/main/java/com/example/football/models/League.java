@@ -1,8 +1,10 @@
 package com.example.football.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -28,7 +30,8 @@ public class League {
     @JsonBackReference
     private Country country;
 
-//    @OneToMany
-//    private List<Team> teams;
+    @OneToMany(mappedBy = "league")
+    @JsonManagedReference
+    private List<Team> teams;
 
 }
