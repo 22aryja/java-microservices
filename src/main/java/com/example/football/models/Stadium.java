@@ -1,4 +1,5 @@
 package com.example.football.models;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,4 +26,7 @@ public class Stadium{
     @Column(nullable = false)
     private Integer capacity;
 
+    @OneToOne(mappedBy = "stadium")
+    @JsonBackReference
+    private Team team;
 }

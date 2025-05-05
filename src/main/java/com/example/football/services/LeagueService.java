@@ -36,7 +36,9 @@ public class LeagueService {
     @Transactional
     public League createLeague(String name, Integer amountOfTeams, UUID countryId){
         Optional<League> possibleLeague = leagueRepository.findLeagueByName(name);
-        possibleLeague.ifPresent(league -> {throw new IllegalStateException("Such league already exists");});
+        possibleLeague.ifPresent(league -> {
+            throw new IllegalStateException("Such league already exists");
+        });
 
         League newLeague = new League();
         newLeague.setName(name);

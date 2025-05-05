@@ -24,11 +24,11 @@ public class TeamService {
     }
 
     public List<Team> getTeams() {
-        return teamRepository.findAll();
+        return teamRepository.findAllTeamsWithStadiums();
     }
 
     public Team getTeamById(UUID teamId) {
-        return teamRepository.findById(teamId).orElseThrow(() ->
+        return teamRepository.findTeamWithStadiumById(teamId).orElseThrow(() ->
                 new EntityNotFoundException("Country not found with id: " + teamId)
         );
     }

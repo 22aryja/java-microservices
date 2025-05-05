@@ -1,5 +1,6 @@
 package com.example.football.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,7 +35,9 @@ public class Team {
 //    @OneToOne
 //    private Coach coach;
 //
-//    @OneToOne
-//    private Stadium stadium;
-//
+    @OneToOne
+    @JoinColumn(name = "stadium_id", referencedColumnName = "id")
+    @JsonManagedReference
+    private Stadium stadium;
+
 }
