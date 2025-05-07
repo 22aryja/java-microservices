@@ -1,6 +1,7 @@
 package com.example.football.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,8 +22,8 @@ public class Player extends Person {
     @JsonBackReference
     private Team team;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "id")
-//    private Player_Stats player_stats;
-
+    @OneToOne
+    @JoinColumn(name = "player_stats_id", referencedColumnName = "id")
+    @JsonManagedReference
+    private PlayerStats playerStats;
 }

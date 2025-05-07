@@ -1,9 +1,9 @@
 package com.example.football.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.UUID;
-
 
 @Getter
 @Setter
@@ -24,8 +24,12 @@ public class PlayerStats {
     private Integer assists;
 
     @Column(nullable = false)
-    private Integer yellow_cards;
+    private Integer yellowCards;
 
     @Column(nullable = false)
-    private Integer red_cards;
+    private Integer redCards;
+
+    @OneToOne(mappedBy = "playerStats")
+    @JsonBackReference
+    private Player player;
 }
