@@ -1,8 +1,8 @@
 package com.example.football.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -12,12 +12,14 @@ import java.util.UUID;
 @Entity
 @Table(name = "player")
 public class Player extends Person {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
 
     @Column(nullable = false)
-    private String t_shirt_number;
+    private String tShirtNumber;
+
+    @ManyToOne
+    @JoinColumn(name = "team_id", nullable = false)
+    @JsonBackReference
+    private Team team;
 
 //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "id")

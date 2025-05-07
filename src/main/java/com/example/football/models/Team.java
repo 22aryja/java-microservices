@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -29,8 +30,9 @@ public class Team {
     @JsonBackReference
     private League league;
 
-//    @OneToMany
-//    private List<Player> players;
+    @OneToMany(mappedBy = "team")
+    @JsonManagedReference
+    private List<Player> players;
 
 //    @OneToOne
 //    private Coach coach;
