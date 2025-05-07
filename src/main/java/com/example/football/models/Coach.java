@@ -1,5 +1,6 @@
 package com.example.football.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,6 +13,12 @@ import lombok.*;
 @Table(name = "coach")
 public class Coach extends Person {
 
-    @OneToOne
-    private Country country_from;
+    @ManyToOne
+    @JoinColumn(name = "country_id", nullable = false)
+    @JsonBackReference
+    private Country countryFrom;
+
+    @OneToOne(mappedBy = "coach")
+    @JsonBackReference
+    private Team team;
 }

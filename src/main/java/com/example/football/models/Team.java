@@ -34,9 +34,11 @@ public class Team {
     @JsonManagedReference
     private List<Player> players;
 
-//    @OneToOne
-//    private Coach coach;
-//
+    @OneToOne
+    @JoinColumn(name = "coach_id", referencedColumnName = "id")
+    @JsonManagedReference
+    private Coach coach;
+
     @OneToOne
     @JoinColumn(name = "stadium_id", referencedColumnName = "id")
     @JsonManagedReference

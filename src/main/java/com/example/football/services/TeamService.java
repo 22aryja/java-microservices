@@ -24,7 +24,7 @@ public class TeamService {
     }
 
     public List<Team> getTeams() {
-        return teamRepository.findAllTeamsWithStadiums();
+        return teamRepository.findAll();
     }
 
     public Team getTeamById(UUID teamId) {
