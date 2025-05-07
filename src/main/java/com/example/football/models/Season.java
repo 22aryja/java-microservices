@@ -1,7 +1,10 @@
 package com.example.football.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -17,17 +20,13 @@ public class Season {
     private UUID id;
 
     @Column(nullable = false)
-    private String from_year;
+    private String fromYear;
 
     @Column(nullable = false)
-    private String to_year;
+    private String toYear;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "season_country",
-//            joinColumns = @JoinColumn(name = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "id")
-//    )
-//    private List<Country> countries;
+    @OneToMany(mappedBy = "season")
+    @JsonManagedReference
+    private List<SeasonCountry> seasonCountries;
 
  }

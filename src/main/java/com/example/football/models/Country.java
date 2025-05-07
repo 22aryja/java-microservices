@@ -33,6 +33,7 @@ public class Country {
     @JsonManagedReference
     private List<Coach> coaches;
 
-//    @ManyToMany(mappedBy = "countries")
-//    private List<Season> seasons;
+    @OneToMany(mappedBy = "country")
+    @JsonManagedReference
+    private List<SeasonCountry> seasonCountries;
 }
